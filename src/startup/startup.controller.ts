@@ -15,9 +15,9 @@ export class StartupController {
     return this.repository.getAll(this.PATH);
   }
 
-  @Get(':id')
-  getById(@Param() params) {
-    return this.repository.getById(this.PATH, params.id);
+  @Get(':uuid')
+  getByuuid(@Param() params) {
+    return this.repository.getByUuid(this.PATH, params.uuid);
   }
 
   @Post()
@@ -25,30 +25,30 @@ export class StartupController {
   create(@Body() startup: Startup) {
     return this.repository.create(this.PATH, startup).pipe(
       filter((result) => !!result),
-      map((idGenerated) => {
+      map((uuidGenerated) => {
           return {
-            id: idGenerated,
+            uuid: uuidGenerated,
           };
         },
       ),
     );
   }
 
-  @Patch(':id')
+  @Patch(':uuid')
   @HttpCode(204)
   update(@Param() params, @Body() startup: Startup) {
-    return this.repository.update(this.PATH, params.id, startup);
+    return this.repository.update(this.PATH, params.uuid, startup);
   }
 
-  @Put(':id')
+  @Put(':uuid')
   @HttpCode(204)
   updateAll(@Param() params, @Body() startup: Startup) {
-    return this.repository.updateAll(this.PATH, params.id, startup);
+    return this.repository.updateAll(this.PATH, params.uuid, startup);
   }
 
-  @Delete(':id')
+  @Delete(':uuid')
   @HttpCode(204)
   delete(@Param() params) {
-    return this.repository.delete(this.PATH, params.id);
+    return this.repository.delete(this.PATH, params.uuid);
   }
 }
