@@ -25,22 +25,22 @@ export class RepositoryService {
       flatMap(documents => documents.docs),
       concatMap((document) => {
         const obj = document.data();
-        obj.id = document.id;
+        obj.uuid = document.id;
         return of(obj);
       }),
       toArray(),
     );
   }
 
-  getById(path: string, id: string): Observable<any> {
-    return from(this.firebaseApp.firestore().collection(path).doc(id).get()).pipe(
+  getByUuid(path: string, uuid: string): Observable<any> {
+    return from(this.firebaseApp.firestore().collection(path).doc(uuid).get()).pipe(
       map((document) => {
         const obj = document.data();
         if (!obj) {
           return null;
         }
 
-        obj.id = document.id;
+        obj.uuid = document.id;
         return obj;
       }),
     );
@@ -52,22 +52,22 @@ export class RepositoryService {
     );
   }
 
-  update(path: string, id: string, obj: any): Observable<boolean> {
-    return from(this.firebaseApp.firestore().collection(path).doc(id).update(obj)).pipe(
+  update(path: string, uuid: string, obj: any): Observable<boolean> {
+    return from(this.firebaseApp.firestore().collection(path).doc(uuid).update(obj)).pipe(
       map(() => true),
     );
 
 
   }
 
-  updateAll(path: string, id: string, obj: any): Observable<boolean> {
-    return from(this.firebaseApp.firestore().collection(path).doc(id).set(obj, { merge: false })).pipe(
+  updateAll(path: string, uuid: string, obj: any): Observable<boolean> {
+    return from(this.firebaseApp.firestore().collection(path).doc(uuid).set(obj, { merge: false })).pipe(
       map(() => true),
     );
   }
 
-  delete(path: string, id: string): Observable<boolean> {
-    return from(this.firebaseApp.firestore().collection(path).doc(id).delete()).pipe(
+  delete(path: string, uuid: string): Observable<boolean> {
+    return from(this.firebaseApp.firestore().collection(path).doc(uuid).delete()).pipe(
       map(() => true),
     );
   }
